@@ -8,7 +8,7 @@ const CompletedTasksView = ({ tasks }) => (
         .filter((task) => task.completed)
         .map((task, index) => (
           <li key={index}>
-            {task.text} - Completed on: {task.date.toLocaleString()}
+            {task.text} - Completed on: {task.date ? task.date.toLocaleString() : 'N/A'}
           </li>
         ))}
     </ul>

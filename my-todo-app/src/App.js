@@ -7,10 +7,8 @@ import './App.css';
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
-// eslint-disable-next-line no-unused-vars
-const [showCompleted, setShowCompleted] = useState(true);
-// eslint-disable-next-line no-unused-vars
-const [showDeleted, setShowDeleted] = useState(true);
+  const [showCompleted, setShowCompleted] = useState(true);
+  const [showDeleted, setShowDeleted] = useState(true);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -23,33 +21,41 @@ const [showDeleted, setShowDeleted] = useState(true);
 
   const addTask = () => {
     if (newTask.trim() !== '') {
-      setTasks([...tasks, { text: newTask, completed: false, deleted: false, date: null }]);
+      setTasks([
+        ...tasks,
+        { id: Date.now(), text: newTask, completed: false, deleted: false, date: null },
+      ]);
       setNewTask('');
     }
   };
 
-  const removeTask = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].deleted = true;
+  const removeTask = (taskId) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, deleted: true } : task
+    );
     setTasks(updatedTasks);
   };
 
-  const recoverTask = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].deleted = false;
+  const recoverTask = (taskId) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, deleted: false } : task
+    );
     setTasks(updatedTasks);
   };
 
-  const toggleTaskCompletion = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].completed = !updatedTasks[index].completed;
-    updatedTasks[index].date = updatedTasks[index].completed ? new Date() : null;
+  const toggleTaskCompletion = (taskId) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId
+        ? { ...task, completed: !task.completed, date: !task.completed ? new Date() : null }
+        : task
+    );
     setTasks(updatedTasks);
   };
 
-  const updateTask = (index, newText) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].text = newText;
+  const updateTask = (taskId, newText) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, text: newText } : task
+    );
     setTasks(updatedTasks);
   };
 
@@ -60,14 +66,14 @@ const [showDeleted, setShowDeleted] = useState(true);
         <ul>
           {tasks
             .filter((task) => !task.deleted)
-            .map((task, index) => (
+            .map((task) => (
               <Task
-                key={index}
+                key={task.id}
                 task={task}
-                onToggleCompletion={() => toggleTaskCompletion(index)}
-                onRemove={() => removeTask(index)}
-                onRecover={() => recoverTask(index)}
-                onUpdate={(newText) => updateTask(index, newText)}
+                onToggleCompletion={() => toggleTaskCompletion(task.id)}
+                onRemove={() => removeTask(task.id)}
+                onRecover={() => recoverTask(task.id)}
+                onUpdate={(newText) => updateTask(task.id, newText)}
               />
             ))}
         </ul>
@@ -75,9 +81,29 @@ const [showDeleted, setShowDeleted] = useState(true);
         <button onClick={addTask}>Add Task</button>
       </div>
 
-      {showCompleted && <CompletedTasksView tasks={tasks} />}
+      <div>
+        <label>
+          Show Completed Tasks
+          <input
+            type="checkbox"
+            checked={showCompleted}
+            onChange={() => setShowCompleted(!showCompleted)}
+          />
+        </label>
+        {showCompleted && <CompletedTasksView tasks={tasks} />}
+      </div>
 
-      {showDeleted && <DeletedTasksView tasks={tasks} />}
+      <div>
+        <label>
+          Show Deleted Tasks
+          <input
+            type="checkbox"
+            checked={showDeleted}
+            onChange={() => setShowDeleted(!showDeleted)}
+          />
+        </label>
+        {showDeleted && <DeletedTasksView tasks={tasks} onRecoverTask={recoverTask} />}
+      </div>
     </div>
   );
 };

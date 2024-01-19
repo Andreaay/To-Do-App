@@ -1,14 +1,15 @@
 import React from 'react';
 
-const DeletedTasksView = ({ tasks }) => (
+const DeletedTasksView = ({ tasks, onRecoverTask }) => (
   <div>
     <h2>Deleted Tasks</h2>
     <ul>
       {tasks
         .filter((task) => task.deleted)
-        .map((task, index) => (
-          <li key={index}>
+        .map((task) => (
+          <li key={task.id}>
             {task.text} - Deleted
+            <button onClick={() => onRecoverTask(task.id)}>Recover</button>
           </li>
         ))}
     </ul>
