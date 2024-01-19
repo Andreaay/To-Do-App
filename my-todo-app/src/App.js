@@ -3,21 +3,19 @@ import CompletedTasksView from './components/CompletedTasksView';
 import DeletedTasksView from './components/DeletedTasksView';
 import Task from './components/Tasks';
 import './App.css';
+import { getStoredTasks, saveTasksToLocalStorage } from './components/LocalStorageTasks';
+
 
 const App = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(getStoredTasks());
   const [newTask, setNewTask] = useState('');
   const [showCompleted, setShowCompleted] = useState(true);
   const [showDeleted, setShowDeleted] = useState(true);
 
   useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    setTasks(storedTasks);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    saveTasksToLocalStorage(tasks);
   }, [tasks]);
+
 
   const addTask = () => {
     if (newTask.trim() !== '') {
@@ -62,23 +60,23 @@ const App = () => {
   return (
     <div>
       <div>
-        <h2>Tasks</h2>
+        <h2>One Task at a Time</h2>
+          <input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
+          <button onClick={addTask}>Add Task</button>
         <ul>
           {tasks
             .filter((task) => !task.deleted)
             .map((task) => (
               <Task
-                key={task.id}
-                task={task}
-                onToggleCompletion={() => toggleTaskCompletion(task.id)}
-                onRemove={() => removeTask(task.id)}
-                onRecover={() => recoverTask(task.id)}
-                onUpdate={(newText) => updateTask(task.id, newText)}
-              />
+              onRecover={() => recoverTask(task.id)}
+              onUpdate={(newText) => updateTask(task.id, newText)}
+              onToggleCompletion={() => toggleTaskCompletion(task.id)}
+              key={task.id}
+              task={task}
+              onRemove={() => removeTask(task.id)}
+            />
             ))}
         </ul>
-        <input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
-        <button onClick={addTask}>Add Task</button>
       </div>
 
       <div>
