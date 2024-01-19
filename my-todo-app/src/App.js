@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import CompletedTasksView from './components/CompletedTasksView';
+import DeletedTasksView from './components/DeletedTasksView';
+import Task from './components/Tasks';
 import './App.css';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
+// eslint-disable-next-line no-unused-vars
+const [showCompleted, setShowCompleted] = useState(true);
+// eslint-disable-next-line no-unused-vars
+const [showDeleted, setShowDeleted] = useState(true);
+
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    setTasks(storedTasks);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = () => {
     if (newTask.trim() !== '') {
-      setTasks([...tasks, { text: newTask, completed: false, date: null }]);
+      setTasks([...tasks, { text: newTask, completed: false, deleted: false, date: null }]);
       setNewTask('');
     }
   };
 
   const removeTask = (index) => {
     const updatedTasks = [...tasks];
-    updatedTasks.splice(index, 1);
+    updatedTasks[index].deleted = true;
+    setTasks(updatedTasks);
+  };
+
+  const recoverTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].deleted = false;
     setTasks(updatedTasks);
   };
 
@@ -32,35 +54,30 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <h1>Todo App</h1>
-      <input
-        type="text"
-        placeholder="Add a new task"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-      />
-      <button onClick={addTask}>Add Task</button>
+    <div>
+      <div>
+        <h2>Tasks</h2>
+        <ul>
+          {tasks
+            .filter((task) => !task.deleted)
+            .map((task, index) => (
+              <Task
+                key={index}
+                task={task}
+                onToggleCompletion={() => toggleTaskCompletion(index)}
+                onRemove={() => removeTask(index)}
+                onRecover={() => recoverTask(index)}
+                onUpdate={(newText) => updateTask(index, newText)}
+              />
+            ))}
+        </ul>
+        <input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
+        <button onClick={addTask}>Add Task</button>
+      </div>
 
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTaskCompletion(index)}
-            />
-            <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-              {task.text}
-            </span>
-            <button onClick={() => removeTask(index)}>Delete</button>
-            <button onClick={() => updateTask(index, prompt('Update task:', task.text))}>
-              Update
-            </button>
-            {task.completed && <span>Completed on: {task.date.toLocaleString()}</span>}
-          </li>
-        ))}
-      </ul>
+      {showCompleted && <CompletedTasksView tasks={tasks} />}
+
+      {showDeleted && <DeletedTasksView tasks={tasks} />}
     </div>
   );
 };
