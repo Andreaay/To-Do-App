@@ -46,18 +46,18 @@ Ensure you have the following software installed before running the application:
    npm install
 
 
- ##Running the Application
+ ## Running the Application
  
  To start the application locally, run the following command:
-   ```bash
-   npm start
+   
+   `npm start`
 
 
 
 Open your web browser and go to http://localhost:3000.
 
 
-##Assumptions
+## Assumptions
 
 
 1. Dependencies: The application relies on React.js and other related dependencies. Ensure you have Node.js installed to manage these dependencies.
