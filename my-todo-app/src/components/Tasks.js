@@ -12,7 +12,7 @@ const Task = ({ task, onToggleCompletion, onRemove, onRecover, onUpdate }) => {
   return (
     <li>
       <button onClick={onToggleCompletion}>
-        {task.completed ? 'Uncomplete' : 'Complete'}
+        {task.completed ? '✅' : '◻️'}
       </button>
       <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
         {task.text}

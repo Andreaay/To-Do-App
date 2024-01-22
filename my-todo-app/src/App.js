@@ -92,7 +92,7 @@ const App = () => {
               onClick={() => setShowCompleted(!showCompleted)}
               className="toggleButton"
               style={{
-                backgroundColor: showCompleted ? '#4caf50' : '#ddd',
+                backgroundColor: showCompleted ? '#7FA7E5' : '#C2C9F2',
                 color: 'white',
                 cursor: 'pointer',
               }}
@@ -109,7 +109,7 @@ const App = () => {
               onClick={() => setShowDeleted(!showDeleted)}
               className="toggleButton"
               style={{
-                backgroundColor: showDeleted ? '#4caf50' : '#ddd',
+                backgroundColor: showDeleted ? '#7FA7E5' : '#C2C9F2',
                 color: 'white',
                 cursor: 'pointer',
               }}

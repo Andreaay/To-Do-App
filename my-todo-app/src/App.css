@@ -1,26 +1,36 @@
 body {
   background-color: #1a1a1a;
   color: white;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+h2{
+  position: center;
 }
 
 .outsideContainer {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  align-items: center;
 }
 
 .insideContainer {
   flex: 2;
-  background-color: red;
+  background-color: #012840;
   border-radius: 8px;
-
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .tasksContainer {
   flex: 1;
-  background-color: #ffcccc;
+  background-color: #9CA653;
   padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .tasksContainer ul {
@@ -28,30 +38,38 @@ body {
   padding: 0;
 }
 
-.tasksContainer button {
-  background-color: #3498db;
+.tasksContainer button, .toggleButton {
+  background-color: #7FA7E5;
   color: white;
   border: none;
   padding: 8px 16px;
   margin: 4px;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
-.toggleButton {
-  background-color: #3498db;
+.tasksContainer button:hover, .toggleButton:hover {
+  background-color: #7FA7E5;
+}
+
+.recoverButton{
+  background-color: #7FA7E5;
   color: white;
   border: none;
   padding: 8px 16px;
   margin: 4px;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
-
 
 @media (min-width: 768px) {
   .outsideContainer {
     flex-direction: row;
+    justify-content: center;
   }
 
   .insideContainer {

@@ -9,7 +9,7 @@ const DeletedTasksView = ({ tasks, onRecoverTask }) => (
         .map((task) => (
           <li key={task.id}>
             {task.text} - Deleted
-            <button onClick={() => onRecoverTask(task.id)}>Recover</button>
+            <button onClick={() => onRecoverTask(task.id)} className='recoverButton'>Recover</button>
           </li>
         ))}
     </ul>
