@@ -5,7 +5,6 @@ import Task from './components/Tasks';
 import './App.css';
 import { getStoredTasks, saveTasksToLocalStorage } from './components/LocalStorageTasks';
 
-
 const App = () => {
   const [tasks, setTasks] = useState(getStoredTasks());
   const [newTask, setNewTask] = useState('');
@@ -15,7 +14,6 @@ const App = () => {
   useEffect(() => {
     saveTasksToLocalStorage(tasks);
   }, [tasks]);
-
 
   const addTask = () => {
     if (newTask.trim() !== '') {
@@ -58,49 +56,69 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h2>One Task at a Time</h2>
-          <input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
-          <button onClick={addTask}>Add Task</button>
-        <ul>
-          {tasks
-            .filter((task) => !task.deleted)
-            .map((task) => (
-              <Task
-              onRecover={() => recoverTask(task.id)}
-              onUpdate={(newText) => updateTask(task.id, newText)}
-              onToggleCompletion={() => toggleTaskCompletion(task.id)}
-              key={task.id}
-              task={task}
-              onRemove={() => removeTask(task.id)}
-            />
-            ))}
-        </ul>
-      </div>
-
-      <div>
-        <label>
-          Show Completed Tasks
+    <div className='outsideContainer'>
+      <div className='insideContainer'>
+        <div className='tasksContainer'>
+          <h2>One Task at a Time</h2>
           <input
-            type="checkbox"
-            checked={showCompleted}
-            onChange={() => setShowCompleted(!showCompleted)}
+            type="text"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            placeholder="Add a new task"
+            aria-label="New Task Input"
           />
-        </label>
-        {showCompleted && <CompletedTasksView tasks={tasks} />}
-      </div>
+          <button onClick={addTask} className="toggleButton">
+            Add Task
+          </button>
+          <ul>
+            {tasks
+              .filter((task) => !task.deleted)
+              .map((task) => (
+                <Task
+                  onRecover={() => recoverTask(task.id)}
+                  onUpdate={(newText) => updateTask(task.id, newText)}
+                  onToggleCompletion={() => toggleTaskCompletion(task.id)}
+                  key={task.id}
+                  task={task}
+                  onRemove={() => removeTask(task.id)}
+                />
+              ))}
+          </ul>
+        </div>
 
-      <div>
-        <label>
-          Show Deleted Tasks
-          <input
-            type="checkbox"
-            checked={showDeleted}
-            onChange={() => setShowDeleted(!showDeleted)}
-          />
-        </label>
-        {showDeleted && <DeletedTasksView tasks={tasks} onRecoverTask={recoverTask} />}
+        <div>
+          <label>
+            <button
+              onClick={() => setShowCompleted(!showCompleted)}
+              className="toggleButton"
+              style={{
+                backgroundColor: showCompleted ? '#4caf50' : '#ddd',
+                color: 'white',
+                cursor: 'pointer',
+              }}
+            >
+              Show Completed Tasks
+            </button>
+          </label>
+          {showCompleted && <CompletedTasksView tasks={tasks} />}
+        </div>
+
+        <div>
+          <label>
+            <button
+              onClick={() => setShowDeleted(!showDeleted)}
+              className="toggleButton"
+              style={{
+                backgroundColor: showDeleted ? '#4caf50' : '#ddd',
+                color: 'white',
+                cursor: 'pointer',
+              }}
+            >
+              Show Deleted Tasks
+            </button>
+          </label>
+          {showDeleted && <DeletedTasksView tasks={tasks} onRecoverTask={recoverTask} />}
+        </div>
       </div>
     </div>
   );

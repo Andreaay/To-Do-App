@@ -1,17 +1,61 @@
-.App {
-  text-align: center;
-  margin-top: 50px;
+body {
+  background-color: #1a1a1a;
+  color: white;
 }
 
-ul {
-  list-style-type: none;
+.outsideContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.insideContainer {
+  flex: 2;
+  background-color: red;
+  border-radius: 8px;
+
+}
+
+.tasksContainer {
+  flex: 1;
+  background-color: #ffcccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.tasksContainer ul {
+  list-style: none;
   padding: 0;
 }
 
-li {
-  margin: 10px 0;
+.tasksContainer button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
-button {
-  margin-left: 5px;
+.toggleButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+@media (min-width: 768px) {
+  .outsideContainer {
+    flex-direction: row;
+  }
+
+  .insideContainer {
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
 }
