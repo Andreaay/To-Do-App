@@ -48,10 +48,7 @@ Ensure you have the following software installed before running the application:
 
  ## Running the Application
  
- To start the application locally, run the following command:
-   
-   `npm start`
-
+ To start the application locally, run the following command: `npm start`
 
 
 Open your web browser and go to http://localhost:3000.
