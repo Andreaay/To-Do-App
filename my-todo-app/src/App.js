@@ -59,16 +59,23 @@ const App = () => {
     <div className='outsideContainer'>
       <div className='insideContainer'>
         <div className='tasksContainer'>
-          <h2>One Task at a Time</h2>
+          <h1>One Task at a Time</h1>
           <input
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
             placeholder="Add a new task"
             aria-label="New Task Input"
+            style={{
+              width: '89%',
+              padding: '8px',
+              fontSize: '16px',
+              borderRadius: '4px',
+              opacity: '0.6',
+            }}
           />
           <button onClick={addTask} className="toggleButton">
-            Add Task
+            Add
           </button>
           <ul>
             {tasks
@@ -86,7 +93,7 @@ const App = () => {
           </ul>
         </div>
 
-        <div>
+        <div className='completedContainer'>
           <label>
             <button
               onClick={() => setShowCompleted(!showCompleted)}
@@ -103,7 +110,7 @@ const App = () => {
           {showCompleted && <CompletedTasksView tasks={tasks} />}
         </div>
 
-        <div>
+        <div className='deletedContainer'>
           <label>
             <button
               onClick={() => setShowDeleted(!showDeleted)}

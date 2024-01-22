@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faUndo, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const Task = ({ task, onToggleCompletion, onRemove, onRecover, onUpdate }) => {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -10,17 +12,25 @@ const Task = ({ task, onToggleCompletion, onRemove, onRecover, onUpdate }) => {
   };
 
   return (
+    <div className='fraseContainer'>
     <li>
-      <button onClick={onToggleCompletion}>
-        {task.completed ? '✅' : '◻️'}
+      <button onClick={onToggleCompletion} 
+      style={{
+        border: '1px solid #7FA7E5',
+        background: 'transparent',
+        outline: 'none',
+        cursor: 'pointer',
+        color: task.completed ? '#7FA7E5' : 'transparent',
+          }}>
+        {task.completed ? ' ✔' : '◻️'}
       </button>
-      <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+      <span style={{ marginLeft: '10px', marginRight: '30px', textDecoration: task.completed ? 'line-through' : 'none' }}>
         {task.text}
       </span>
-      <button onClick={onRemove}>Delete</button>
-      {task.deleted && <button onClick={onRecover}>Recover</button>}
+      <button onClick={onRemove}><FontAwesomeIcon icon={faTrash} /></button>
+      {task.deleted && <button onClick={onRecover}><FontAwesomeIcon icon={faUndo} /></button>}
 
-      {!isUpdating && <button onClick={() => setIsUpdating(true)}>Update</button>}
+      {!isUpdating && <button onClick={() => setIsUpdating(true)}><FontAwesomeIcon icon={faEdit} /></button>}
 
       {isUpdating && (
         <>
@@ -37,6 +47,7 @@ const Task = ({ task, onToggleCompletion, onRemove, onRecover, onUpdate }) => {
         <span>Completed on: {task.date.toLocaleString()}</span>
       )}
     </li>
+    </div>
   );
 };
 

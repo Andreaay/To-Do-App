@@ -1,12 +1,18 @@
 body {
-  background-color: #1a1a1a;
+  background-color: #012840;
   color: white;
   margin: 0;
   font-family: 'Arial', sans-serif;
 }
 
+h1{
+  text-align: center;
+  font-size:xx-large;
+}
+
 h2{
-  position: center;
+  text-align: center;
+  font-size:xx-large;
 }
 
 .outsideContainer {
@@ -22,20 +28,48 @@ h2{
   border-radius: 8px;
   margin-bottom: 20px;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.tasksContainer {
-  flex: 1;
+.tasksContainer{
+  flex: 2;
   background-color: #9CA653;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
 }
 
-.tasksContainer ul {
+.tasksContainer ul, .fraseContainer ul {
   list-style: none;
   padding: 0;
+}
+
+.fraseContainer li {
+  list-style: none;
+  margin: 10px 0; 
+  padding: 5px;
+  background-color: #012840;
+  border-radius: 8px;
+  width: 98%;
+}
+
+
+.completedContainer {
+  flex: 2;
+  background-color: #9CA653;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.deletedContainer {
+  flex: 2;
+  background-color: #9CA653;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
 }
 
 .tasksContainer button, .toggleButton {
