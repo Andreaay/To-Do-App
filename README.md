@@ -38,12 +38,36 @@ Ensure you have the following software installed before running the application:
    git clone https://github.com/Andreaay/To-Do-App.git
 
 2. Navigate to the project directory:
-   ```cd your-project
+   ```bash
+   cd my-todo-app
 
 3. Install dependencies:
-   ```npm install
+   ```bash
+   npm install
 
-4. To start the application locally, run the following command:
-   ```npm start
 
-5. Open your web browser and go to http://localhost:3000.
+ ##Running the Application
+ 
+ To start the application locally, run the following command:
+   ```bash
+   npm start
+
+
+
+Open your web browser and go to http://localhost:3000.
+
+
+##Assumptions
+
+
+1. Dependencies: The application relies on React.js and other related dependencies. Ensure you have Node.js installed to manage these dependencies.
+
+2. Local Storage: The application utilizes local storage for task data persistence. Ensure that the browser has local storage enabled.
+
+3. Network Connection: The application assumes a stable internet connection for loading external dependencies and potential future features.
+
+4. User Permissions: The application assumes that users have standard permissions to interact with and manage tasks. No user authentication or authorization is implemented in this version.
+
+5. Data and Privacy: Task data is stored locally and is not shared externally. The application does not collect personal information or send data to external servers.
+
+6. Assumed Workflows: Users are expected to follow standard task management workflows, including adding, completing, and deleting tasks. The application assumes users are familiar with common task management interactions.
