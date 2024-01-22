@@ -55,13 +55,23 @@ const App = () => {
     setTasks(updatedTasks);
   };
 
+  const toggleCompletedVisibility = () => {
+    setShowCompleted(!showCompleted);
+  };
+
+  const toggleDeletedVisibility = () => {
+    setShowDeleted(!showDeleted);
+  };
+
   return (
     <div className='outsideContainer'>
       <div className='insideContainer'>
         <div className='tasksContainer'>
           <h1>One Task at a Time</h1>
+          <label htmlFor="newTask" className="visuallyHidden">New Task</label>
           <input
             type="text"
+            id="newTask"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
             placeholder="Add a new task"
@@ -96,13 +106,14 @@ const App = () => {
         <div className='completedContainer'>
           <label>
             <button
-              onClick={() => setShowCompleted(!showCompleted)}
+              onClick={toggleCompletedVisibility}
               className="toggleButton"
               style={{
                 backgroundColor: showCompleted ? '#7FA7E5' : '#C2C9F2',
                 color: 'white',
                 cursor: 'pointer',
               }}
+              aria-expanded={showCompleted}
             >
               Show Completed Tasks
             </button>
@@ -113,13 +124,14 @@ const App = () => {
         <div className='deletedContainer'>
           <label>
             <button
-              onClick={() => setShowDeleted(!showDeleted)}
+              onClick={toggleDeletedVisibility}
               className="toggleButton"
               style={{
                 backgroundColor: showDeleted ? '#7FA7E5' : '#C2C9F2',
                 color: 'white',
                 cursor: 'pointer',
               }}
+              aria-expanded={showDeleted}
             >
               Show Deleted Tasks
             </button>

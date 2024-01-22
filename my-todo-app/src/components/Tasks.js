@@ -13,40 +13,62 @@ const Task = ({ task, onToggleCompletion, onRemove, onRecover, onUpdate }) => {
 
   return (
     <div className='fraseContainer'>
-    <li>
-      <button onClick={onToggleCompletion} 
-      style={{
-        border: '1px solid #7FA7E5',
-        background: 'transparent',
-        outline: 'none',
-        cursor: 'pointer',
-        color: task.completed ? '#7FA7E5' : 'transparent',
-          }}>
-        {task.completed ? ' ✔' : '◻️'}
-      </button>
-      <span style={{ marginLeft: '10px', marginRight: '30px', textDecoration: task.completed ? 'line-through' : 'none' }}>
-        {task.text}
-      </span>
-      <button onClick={onRemove}><FontAwesomeIcon icon={faTrash} /></button>
-      {task.deleted && <button onClick={onRecover}><FontAwesomeIcon icon={faUndo} /></button>}
+      <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+        <button
+          onClick={onToggleCompletion}
+          style={{
+            border: '1px solid #7FA7E5',
+            background: 'transparent',
+            outline: 'none',
+            cursor: 'pointer',
+            color: task.completed ? '#7FA7E5' : 'transparent',
+            marginRight: '10px',
+          }}
+          aria-label={`Toggle Completion for "${task.text}"`}
+        >
+          {task.completed ? '✔' : '◻️'}
+        </button>
+        <span
+          style={{
+            flex: 1,
+            marginRight: '30px',
+            textDecoration: task.completed ? 'line-through' : 'none',
+          }}
+        >
+          {task.text}
+        </span>
+        <button onClick={onRemove} aria-label={`Remove Task "${task.text}"`}>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+        {task.deleted && (
+          <button onClick={onRecover} aria-label={`Recover Task "${task.text}"`}>
+            <FontAwesomeIcon icon={faUndo} />
+          </button>
+        )}
 
-      {!isUpdating && <button onClick={() => setIsUpdating(true)}><FontAwesomeIcon icon={faEdit} /></button>}
+        {!isUpdating && (
+          <button onClick={() => setIsUpdating(true)} aria-label={`Edit Task "${task.text}"`}>
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+        )}
 
-      {isUpdating && (
-        <>
-          <input
-            type="text"
-            value={updatedText}
-            onChange={(e) => setUpdatedText(e.target.value)}
-          />
-          <button onClick={handleUpdate}>Accept</button>
-        </>
-      )}
+        {isUpdating && (
+          <>
+            <input
+              type="text"
+              value={updatedText}
+              onChange={(e) => setUpdatedText(e.target.value)}
+            />
+            <button onClick={handleUpdate} aria-label={`Accept Update for Task "${task.text}"`}>
+              Accept
+            </button>
+          </>
+        )}
 
-      {task.completed && task.date && (
-        <span>Completed on: {task.date.toLocaleString()}</span>
-      )}
-    </li>
+        {task.completed && task.date && (
+          <span>Completed on: {task.date.toLocaleString()}</span>
+        )}
+      </li>
     </div>
   );
 };
